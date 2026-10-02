@@ -2,13 +2,13 @@
 
 [English](README.md) | 日本語
 
-[TaikoNauts ModLoader](https://github.com/aightallthing/taikonauts-mod-loader) と
+TaikoNauts ModLoader(インストーラーに同梱)と
 [NULM Background](https://github.com/36536pu4jt98g3ju095jk/taikonauts-nulm-background-mod) MOD を、自動で導入する Windows 用のインストーラーです。`TaikoNauts.exe` を選んで **インストール** を押すだけです。
 
 ## ダウンロード
 
 **[TaikoNautsModloaderInstaller.exe](https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller/releases/latest/download/TaikoNautsModloaderInstaller.exe)**
-(約 68 MB。.NET のインストールは不要です)。すべてのリリースは
+(約 132 MB。ModLoader を同梱しているためです。.NET のインストールは不要です)。すべてのリリースは
 [リリースページ](https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller/releases)にあります。
 
 ## 使い方
@@ -24,7 +24,7 @@
 
 ## やること
 
-1. **ModLoader**: 最新のリリースをダウンロードして、ゲームのフォルダに展開し、ModLoader 自身の `install.ps1` を実行します。そのため、元の `raylib.dll` の確認など、ModLoader 側のチェックがそのまま働きます。すでに最新の場合は、ダウンロードし直しません。
+1. **ModLoader**: インストーラーに同梱した ModLoader(v1.3.1)を、ゲームのフォルダに展開し、ModLoader 自身の `install.ps1` を実行します。そのため、元の `raylib.dll` の確認など、ModLoader 側のチェックがそのまま働きます。ダウンロードは要りません。すでに同じか、より新しいものが入っている場合は、そのままにします(`--force` で入れ直せます)。
 2. **NULM Background**: 最新のリリースを `mods\nulm-background` に導入します。すでにある `config.json` とパックはそのまま残します。
 3. **Lumens**: ゲームが使っているスキン(または選んだスキン)に `Skins\<スキン>\Lumens` を作り、パックの置き場所を書いたメモを入れます。
 
@@ -34,8 +34,8 @@ NULM のデータや画像は、インストーラーには付いていません
 
 ## 安全面
 
-- ダウンロードするのは、上の 2 つの公開 GitHub リポジトリだけです。
-- すべてのダウンロードを、GitHub が公開しているリリースファイルの SHA-256 と照合します。一致しなければ、そのファイルは破棄します。
+- ダウンロードするのは、上の公開 GitHub リポジトリにある NULM Background MOD だけです。ModLoader は、インストーラーの中に入っています。
+- ダウンロードしたファイルを、GitHub が公開しているリリースファイルの SHA-256 と照合します。一致しなければ、そのファイルは破棄します。
 - 展開先のフォルダの外に出てしまうエントリを含むパッケージは、拒否します。
 - `TaikoNauts.exe` は書き換えません。未対応または書き換え済みの `raylib.dll` は、ModLoader のインストーラーが置き換えを拒否し、そのメッセージを表示します。
 - 現在のユーザー権限で動き、管理者権限は要求しません。ゲームが保護されたフォルダにある場合は、管理者として実行してください。
@@ -52,7 +52,9 @@ TaikoNautsModloaderInstaller.exe --game <TaikoNauts.exe のパス> [オプショ
 | `--no-loader` / `--no-mod` / `--no-lumens` | その手順を省きます。 |
 | `--skin <名前>` | `Lumens` フォルダを作るスキン(初期値は使用中のスキン)。 |
 | `--force` | ModLoader が最新でも、入れ直します。 |
-| `--loader-zip <ファイル>` / `--mod-zip <ファイル>` | ダウンロードの代わりに、手元のパッケージを使います(オフライン用)。 |
+| `--loader-zip <ファイル>` | 同梱のものの代わりに、手元の ModLoader パッケージを使います。 |
+| `--mod-zip <ファイル>` | ダウンロードの代わりに、手元の MOD のパッケージを使います(オフライン用)。 |
+| `--version` | インストーラーのバージョンと、同梱している ModLoader のバージョンを表示します。 |
 | `--lumens-zip <ファイル>` | NULM パックの ZIP を、スキンの `Lumens` フォルダに導入します。 |
 | `--log <ファイル>` | ログをファイルにも書き出します。 |
 | `--lang ja\|en` | メッセージの言語。 |
@@ -68,10 +70,10 @@ TaikoNautsModloaderInstaller.exe --game <TaikoNauts.exe のパス> [オプショ
 Windows と .NET 8 SDK が必要です。
 
 ```powershell
-.\scripts\build.ps1
+.\scripts\build.ps1 -LoaderZip <TaikoNauts-ModLoader-vX.Y.Z-win-x64.zip のパス>
 ```
 
-`dist\TaikoNautsModloaderInstaller.exe`(自己完結の単一ファイル、約 68 MB)ができます。`tests\integration.ps1` は、手元のパッケージを使って使い捨てのフォルダに導入し、ネットワークを必要としません。
+その ModLoader パッケージを埋め込んで、`dist\TaikoNautsModloaderInstaller.exe`(自己完結の単一ファイル、約 132 MB)ができます。パッケージはこのリポジトリには入れていません。ビルド時に、ローダーの DLL、インストーラーのスクリプト、Mod Manager が入っているかを確認し、バージョンはファイル名から読み取ります(`-LoaderVersion` でも指定できます)。`tests\integration.ps1` は、手元のパッケージを使って使い捨てのフォルダに導入し、ネットワークを必要としません。
 
 ```powershell
 .\tests\integration.ps1 -Exe .\dist\TaikoNautsModloaderInstaller.exe `

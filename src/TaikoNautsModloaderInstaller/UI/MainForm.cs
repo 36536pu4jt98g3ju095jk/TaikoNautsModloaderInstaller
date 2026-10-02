@@ -190,7 +190,10 @@ internal sealed class MainForm : Form
         browseButton.Text = Lang.T("Browse...", "参照...");
         statusGroup.Text = Lang.T("Status", "状態");
         optionsGroup.Text = Lang.T("Install", "導入するもの");
-        loaderCheck.Text = Lang.T("TaikoNauts ModLoader (latest)", "TaikoNauts ModLoader(最新版)");
+        string bundled = BundledLoader.Available && BundledLoader.Version is { } loaderVersion ? $" v{loaderVersion.ToString(3)}" : string.Empty;
+        loaderCheck.Text = BundledLoader.Available
+            ? Lang.T($"TaikoNauts ModLoader (bundled{bundled})", $"TaikoNauts ModLoader(同梱{bundled})")
+            : Lang.T("TaikoNauts ModLoader (latest)", "TaikoNauts ModLoader(最新版)");
         modCheck.Text = Lang.T("NULM Background mod (latest)", "NULM Background MOD(最新版)");
         lumensCheck.Text = Lang.T("Create a Lumens folder in skin:", "Lumens フォルダを作るスキン:");
         zipGroup.Text = Lang.T("Lumens ZIP (optional)", "Lumens の ZIP(任意)");

@@ -48,6 +48,27 @@ try {
     Assert (Test-Path "$game\Skins\ksty\Lumens") 'Lumens is created in the skin in use'
     Assert (-not (Test-Path "$game\Skins\K-Style\Lumens")) 'other skins are left alone'
 
+    Write-Host 'the bundled ModLoader'
+    $bundled = New-FakeGame 'bundled' $null
+    $run = Invoke-Installer @('--game', "`"$bundled`"", '--no-mod', '--no-lumens') 'bundled.log'
+    Assert ($run.Code -eq 0) 'installs with no package given (nothing is downloaded)'
+    Assert ($run.Log -match 'bundled ModLoader') 'says it uses the bundled ModLoader'
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $archive = [IO.Compression.ZipFile]::OpenRead((Resolve-Path $LoaderZip))
+    $entry = $archive.GetEntry('raylib_mod_loader.dll')
+    $sha = [Security.Cryptography.SHA256]::Create()
+    $zipHash = [BitConverter]::ToString($sha.ComputeHash($entry.Open())).Replace('-', '')
+    $archive.Dispose()
+    Assert ((Get-FileHash "$bundled\raylib.dll").Hash -eq $zipHash) 'raylib.dll is the bundled ModLoader'
+    Assert (Test-Path "$bundled\TaikoNauts.ModManager.exe") 'the Mod Manager is installed'
+    $run = Invoke-Installer @('--game', "`"$bundled`"", '--no-mod', '--no-lumens') 'bundled2.log'
+    Assert ($run.Code -eq 0 -and $run.Log -match 'already installed') 'a second run does not install it again'
+    $run = Invoke-Installer @('--game', "`"$bundled`"", '--no-mod', '--no-lumens', '--force') 'bundled3.log'
+    Assert ($run.Code -eq 0 -and $run.Log -match 'Extracting the ModLoader') '--force installs it again'
+    $versionFile = Join-Path $work 'version.txt'
+    Start-Process -FilePath $Exe -ArgumentList '--version' -Wait -WindowStyle Hidden -RedirectStandardOutput $versionFile
+    Assert ((Get-Content $versionFile -Raw) -match 'bundled ModLoader: v\d') '--version reports the bundled ModLoader'
+
     Write-Host 'a second run keeps user files'
     [IO.File]::WriteAllText("$game\mods\nulm-background\config.json", '{"mine": true}')
     New-Item -ItemType Directory -Path "$game\Skins\ksty\Lumens\bg_nomal_a_01" -Force | Out-Null

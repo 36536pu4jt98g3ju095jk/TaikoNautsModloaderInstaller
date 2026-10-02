@@ -15,10 +15,15 @@
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <DebugType>embedded</DebugType>
     <InvariantGlobalization>false</InvariantGlobalization>
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <Product>TaikoNauts ModLoader Installer</Product>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <!-- The ModLoader package is placed here by scripts\build.ps1 and embedded in the executable. -->
+  <ItemGroup Condition="Exists('Embedded\ModLoader.zip')">
+    <EmbeddedResource Include="Embedded\ModLoader.zip" LogicalName="ModLoader.zip" />
+    <EmbeddedResource Include="Embedded\ModLoader.version" LogicalName="ModLoader.version" />
+  </ItemGroup>
 </Project>

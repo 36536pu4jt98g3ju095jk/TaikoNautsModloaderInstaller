@@ -131,17 +131,34 @@ internal sealed class InstallPipeline
     {
         GameFolder game = options.Game;
         string zip;
-        ReleaseInfo? release = null;
 
         if (options.LoaderZipPath != null)
         {
             zip = options.LoaderZipPath;
             Say($"Using the local ModLoader package {zip}", $"ローカルの ModLoader パッケージを使います: {zip}");
         }
+        else if (BundledLoader.Available)
+        {
+            // the ModLoader travels inside this executable, so no download is needed
+            Version? bundled = BundledLoader.Version;
+            Version? installed = game.InstalledLoaderVersion;
+            if (!options.Force && game.GetLoaderState() == LoaderState.Installed &&
+                installed != null && bundled != null && installed >= bundled)
+            {
+                Say($"The ModLoader v{bundled.ToString(3)} (or newer) is already installed.",
+                    $"ModLoader v{bundled.ToString(3)} 以上が導入済みです。");
+                return;
+            }
+
+            Say($"Using the bundled ModLoader v{bundled?.ToString(3) ?? "?"}.",
+                $"同梱の ModLoader v{bundled?.ToString(3) ?? "?"} を使います。");
+            zip = BundledLoader.WriteTo(work);
+        }
         else
         {
+            // a build without the bundled package falls back to the public release
             Say("Checking the latest ModLoader...", "最新の ModLoader を確認しています...");
-            release = await GitHubReleases.LatestAsync(Sources.LoaderRepo, cancellation).ConfigureAwait(false);
+            ReleaseInfo release = await GitHubReleases.LatestAsync(Sources.LoaderRepo, cancellation).ConfigureAwait(false);
             Version? installed = game.InstalledLoaderVersion;
             if (!options.Force && game.GetLoaderState() == LoaderState.Installed &&
                 installed != null && release.Version != null && installed >= release.Version)
@@ -175,7 +192,6 @@ internal sealed class InstallPipeline
 
         Say("The ModLoader is installed.", "ModLoader を導入しました。");
     }
-
     /// <summary>Runs the ModLoader's own install.ps1, so its checks of the original raylib.dll apply.</summary>
     private async Task RunLoaderInstallerAsync(GameFolder game, CancellationToken cancellation)
     {

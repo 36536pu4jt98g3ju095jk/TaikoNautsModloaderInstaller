@@ -23,6 +23,7 @@ internal static class Program
         "  --lumens-zip <file>   a ZIP of NULM packs to install into the skin's Lumens folder\r\n" +
         "  --log <file>          also write the log to a file\r\n" +
         "  --lang ja|en          language of the messages\r\n" +
+        "  --version             show the installer version and the bundled ModLoader\r\n" +
         "  --selftest-ui         create the window once and exit\r\n" +
         "  --shot <file.png>     with --selftest-ui: save the window as an image\r\n" +
         "  --shot-path <text>    with --shot: text to show in the path box\r\n";
@@ -54,6 +55,14 @@ internal static class Program
         {
             AttachConsole(-1);
             Console.Write(Usage);
+            return 0;
+        }
+
+        if (flags.Contains("--version"))
+        {
+            AttachConsole(-1);
+            string loader = BundledLoader.Available ? "v" + (BundledLoader.Version?.ToString(3) ?? "?") : "not bundled";
+            Console.WriteLine($"TaikoNautsModloaderInstaller {typeof(Program).Assembly.GetName().Version?.ToString(3)}; bundled ModLoader: {loader}");
             return 0;
         }
 
