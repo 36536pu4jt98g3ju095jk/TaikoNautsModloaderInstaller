@@ -145,13 +145,6 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
 <header class="site">
   <div class="wrap">
     <a class="brand" href="#top">ModLoader Installer</a>
-    <nav class="toc">
-      <a href="#what"><span lang="ja">入るもの</span><span lang="en">What it installs</span></a>
-      <a href="#use"><span lang="ja">使い方</span><span lang="en">How to use</span></a>
-      <a href="#lumens">Lumens</a>
-      <a href="#help"><span lang="ja">困ったとき</span><span lang="en">Help</span></a>
-      <a href="#safety"><span lang="ja">安全面</span><span lang="en">Safety</span></a>
-    </nav>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-set-lang="ja" aria-pressed="true">日本語</button>
       <button type="button" data-set-lang="en" aria-pressed="false">English</button>
@@ -171,39 +164,7 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
     <a class="btn primary" href="https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller/releases"><span lang="ja">ダウンロード(リリースページ)</span><span lang="en">Download (releases)</span></a>
     <a class="btn" href="https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller"><span lang="ja">GitHub で見る</span><span lang="en">View on GitHub</span></a>
   </div>
-  <ul class="three">
-    <li><b>STEP 1</b><span lang="ja">TaikoNauts.exe を選ぶ</span><span lang="en">Select TaikoNauts.exe</span></li>
-    <li><b>STEP 2</b><span lang="ja">NULM の ZIP を選ぶ(あれば)</span><span lang="en">Choose a NULM ZIP (if any)</span></li>
-    <li><b>STEP 3</b><span lang="ja">「インストール」を押す</span><span lang="en">Press Install</span></li>
-  </ul>
 </div>
-
-<section id="what">
-  <h2 lang="ja">何をインストールするの?</h2>
-  <h2 lang="en">What does it install?</h2>
-  <p class="sub" lang="ja">下の 3 つを、まとめて用意します。どれも、チェックを外せば省けます。</p>
-  <p class="sub" lang="en">The three things below. Untick any of them to skip it.</p>
-  <div class="cards">
-    <div class="card">
-      <span class="tag">ModLoader</span>
-      <h3 lang="ja">MOD を動かす土台</h3><h3 lang="en">The base for mods</h3>
-      <p lang="ja">TaikoNauts に MOD を読み込ませる仕組みです。公式の ModLoader の最新版を入れます。</p>
-      <p lang="en">The mechanism that lets TaikoNauts load mods. The latest official ModLoader is installed.</p>
-    </div>
-    <div class="card">
-      <span class="tag">NULM Background</span>
-      <h3 lang="ja">背景に NULM を流す MOD</h3><h3 lang="en">The NULM background mod</h3>
-      <p lang="ja">演奏画面の上背景・下背景に NULM アニメーションを流します。クリアすると fever 背景に変わります。</p>
-      <p lang="en">Plays NULM animations as the upper and lower play-screen backgrounds, and switches to fever when you clear.</p>
-    </div>
-    <div class="card">
-      <span class="tag">Lumens</span>
-      <h3 lang="ja">NULM の置き場所</h3><h3 lang="en">Where NULM goes</h3>
-      <p lang="ja">使っているスキンの中に <code class="inline">Lumens</code> フォルダを作ります。NULM の ZIP を選べば、その中身も自動で入れます。ZIP を選ばなければ<strong>中身は空</strong>です。</p>
-      <p lang="en">Creates a <code class="inline">Lumens</code> folder in the skin you use. If you choose a NULM ZIP, its packs are installed too. Without a ZIP the folder is <strong>empty</strong>.</p>
-    </div>
-  </div>
-</section>
 
 <section id="use">
   <h2 lang="ja">使い方</h2>
@@ -256,159 +217,14 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
       </li>
       <li>
         <p lang="ja"><strong>ゲームを起動する(ZIP を使わなかった人は、先に NULM を置く)。</strong></p>
-        <p class="muted" lang="ja">ZIP を選んだ人は、そのままゲームを起動できます。選ばなかった人は、「Lumens フォルダを開く」で開く場所に、NULM のパックを自分で置きます。くわしくは <a href="#lumens">下の説明</a> へ。</p>
+        <p class="muted" lang="ja">ZIP を選んだ人は、そのままゲームを起動できます。選ばなかった人は、「Lumens フォルダを開く」で開く場所に、NULM のパックを、パックごとに 1 つのフォルダで自分で置きます。</p>
         <p lang="en"><strong>Start the game (if you used no ZIP, put NULM packs in first).</strong></p>
-        <p class="muted" lang="en">If you chose a ZIP you can start the game right away. Otherwise put your NULM packs into the folder that “Open Lumens folder” opens. See <a href="#lumens">the next section</a>.</p>
+        <p class="muted" lang="en">If you chose a ZIP you can start the game right away. Otherwise put your NULM packs, one folder per pack, into the folder that “Open Lumens folder” opens.</p>
       </li>
     </ol>
   </div>
   <div class="note ok" lang="ja">すでに ModLoader が最新なら、ダウンロードし直しません。もう一度実行しても、<code class="inline">config.json</code> や、置いた NULM のパックは消えません。</div>
   <div class="note ok" lang="en">If the ModLoader is already up to date it is not downloaded again. Running the installer again never removes your <code class="inline">config.json</code> or your NULM packs.</div>
-</section>
-
-<section id="lumens">
-  <h2 lang="ja">Lumens に NULM を置く</h2>
-  <h2 lang="en">Putting NULM in Lumens</h2>
-  <p lang="ja">NULM のパックは、スキンの <code class="inline">Lumens</code> フォルダに、<strong>パックごとに 1 つのフォルダ</strong>で置かれます。ゲームのスキンごとに別のセットを持てるので、スキンを切り替えると背景も変わります。</p>
-  <p lang="en">NULM packs live in the skin's <code class="inline">Lumens</code> folder, <strong>one folder per pack</strong>. Each skin can have its own set, so switching skins switches the backgrounds.</p>
-  <h3 lang="ja">ZIP で入れる(おすすめ)</h3>
-  <h3 lang="en">Install from a ZIP (recommended)</h3>
-  <p lang="ja">インストーラーの「Lumens の ZIP」で ZIP を選べば、自動で振り分けて入れます。ZIP の作りは、次のどれでもかまいません。</p>
-  <p lang="en">Choose the ZIP under “Lumens ZIP” and the installer sorts it out. Any of these layouts works.</p>
-  <ul class="plain" lang="ja">
-    <li>パックのフォルダが、ZIP の一番上に並んでいる</li>
-    <li><code class="inline">Lumens</code> など、別のフォルダに包まれている</li>
-    <li>フォルダがなく、<code class="inline">.nulm</code> と画像が直接入っている</li>
-  </ul>
-  <ul class="plain" lang="en">
-    <li>The pack folders are at the top of the ZIP</li>
-    <li>They are wrapped in another folder such as <code class="inline">Lumens</code></li>
-    <li>There are no folders, just the <code class="inline">.nulm</code> and its images</li>
-  </ul>
-  <p class="muted" lang="ja">同じ名前のパックがすでにあれば、上書きします。取り込むのは <code class="inline">.nulm</code> と <code class="inline">.png</code> だけで、ほかのファイル(実行ファイルなど)は入れません。</p>
-  <p class="muted" lang="en">A pack with the same name is replaced. Only <code class="inline">.nulm</code> and <code class="inline">.png</code> files are taken; nothing else (such as executables) is installed.</p>
-  <h3 lang="ja">自分でフォルダに置く</h3>
-  <h3 lang="en">Or put them in by hand</h3>
-  <pre class="code">TaikoNauts\
-  Skins\
-    ksty\
-      Lumens\
-        bg_nomal_a_01\
-          bg_nomal_a_01.nulm
-          bg_nomal_a_01_0.png
-        donbg_a_01_1p\
-          donbg_a_01_1p.nulm
-          donbg_a_01_1p_0.png</pre>
-  <div class="tablewrap">
-    <table>
-      <thead><tr><th><span lang="ja">フォルダ名の先頭</span><span lang="en">Folder name starts with</span></th><th><span lang="ja">使われる場所</span><span lang="en">Used for</span></th></tr></thead>
-      <tbody>
-        <tr><td><code class="inline">donbg_</code></td><td><span lang="ja">上背景</span><span lang="en">Upper background</span></td></tr>
-        <tr><td><code class="inline">bg_nomal_</code></td><td><span lang="ja">下背景</span><span lang="en">Lower background</span></td></tr>
-        <tr><td><code class="inline">bg_fever_</code></td><td><span lang="ja">fever 背景(クリア中に表示)</span><span lang="en">Fever background (while cleared)</span></td></tr>
-        <tr><td><code class="inline">bg_dai_</code></td><td><span lang="ja">下背景の上の台</span><span lang="en">Stand over the lower background</span></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p lang="ja">曲が始まるたびに、同じ種類のパックの中から 1 つがランダムに選ばれます。詳しい設定は、<a href="https://36536pu4jt98g3ju095jk.github.io/taikonauts-nulm-background-mod/">NULM Background の説明ページ</a>を見てください。</p>
-  <p lang="en">At the start of each song one pack of each kind is picked at random. For more settings see the <a href="https://36536pu4jt98g3ju095jk.github.io/taikonauts-nulm-background-mod/">NULM Background guide</a>.</p>
-  <div class="note warn" lang="ja">NULM のデータや画像は、このインストーラーには含まれていません。ご自身で用意できるものだけを使ってください。</div>
-  <div class="note warn" lang="en">This installer contains no NULM data or textures. Use only what you have the right to use.</div>
-</section>
-
-<section id="help">
-  <h2 lang="ja">うまくいかないとき</h2>
-  <h2 lang="en">When something goes wrong</h2>
-  <p class="sub" lang="ja">失敗すると、ウィンドウにメッセージが出ます。多くは、下の表のどれかです。</p>
-  <p class="sub" lang="en">A failure shows a message in the window. Most are one of these.</p>
-  <div class="tablewrap">
-    <table>
-      <thead><tr><th><span lang="ja">メッセージ</span><span lang="en">Message</span></th><th><span lang="ja">原因と対処</span><span lang="en">Cause and fix</span></th></tr></thead>
-      <tbody>
-        <tr>
-          <td><span lang="ja">TaikoNauts が起動しています</span><span lang="en">TaikoNauts is running</span></td>
-          <td><span lang="ja">ゲームを終了してから、もう一度「インストール」を押します。</span><span lang="en">Close the game and press Install again.</span></td>
-        </tr>
-        <tr>
-          <td><span lang="ja">Mod Manager が起動しています</span><span lang="en">The Mod Manager is running</span></td>
-          <td><span lang="ja"><code class="inline">TaikoNauts.ModManager.exe</code> を閉じてから、もう一度試します。</span><span lang="en">Close <code class="inline">TaikoNauts.ModManager.exe</code> and try again.</span></td>
-        </tr>
-        <tr>
-          <td><code class="inline">Unsupported or already modified raylib.dll</code></td>
-          <td>
-            <span lang="ja">ゲームの <code class="inline">raylib.dll</code> が、ModLoader の対応するものと違います。ゲームが更新された直後や、別の方法の MOD で書き換えた場合に起きます。元の <code class="inline">raylib.dll</code> に戻してから(ゲームの再インストールや、整合性の確認など)、もう一度試します。ゲームの更新直後は、ModLoader の対応を待つ必要があることもあります。</span>
-            <span lang="en">The game's <code class="inline">raylib.dll</code> is not the one the ModLoader supports. This happens right after a game update or when another kind of mod replaced it. Restore the original <code class="inline">raylib.dll</code> (reinstall or verify the game files) and try again. Right after a game update you may have to wait for a ModLoader update.</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span lang="ja">GitHub に接続できませんでした</span><span lang="en">Could not reach GitHub</span></td>
-          <td><span lang="ja">インターネットの接続や、ファイアウォール・プロキシの設定を確認してください。短い時間に何度も実行すると、GitHub に一時的に止められることがあります。しばらく待ってから、もう一度試します。</span><span lang="en">Check your internet connection, firewall and proxy. Running it many times in a short time can make GitHub block you for a while; wait and try again.</span></td>
-        </tr>
-        <tr>
-          <td><span lang="ja">SHA-256 が一致しないため、破棄しました</span><span lang="en">does not match its published SHA-256</span></td>
-          <td><span lang="ja">ダウンロードが壊れた可能性があります。ファイルは破棄されているので、もう一度実行してください。何度も出る場合は、通信経路の問題かもしれません。</span><span lang="en">The download may be damaged. The file was discarded, so run it again. If it keeps happening, something on the network path may be altering downloads.</span></td>
-        </tr>
-        <tr>
-          <td><span lang="ja">アクセスが拒否されました</span><span lang="en">Access was denied</span></td>
-          <td><span lang="ja">ゲームが <code class="inline">Program Files</code> のような保護された場所にあります。インストーラーを右クリックして「管理者として実行」するか、ゲームを別の場所に移してください。</span><span lang="en">The game is in a protected place such as <code class="inline">Program Files</code>. Right-click the installer and choose “Run as administrator”, or move the game elsewhere.</span></td>
-        </tr>
-        <tr>
-          <td><span lang="ja">ZIP に NULM のパックがありません</span><span lang="en">The ZIP has no NULM pack</span></td>
-          <td><span lang="ja">パックは、<code class="inline">X.nulm</code> と <code class="inline">X_0.png</code> などの画像が入った、<code class="inline">X</code> という名前のフォルダです。フォルダ名と <code class="inline">.nulm</code> の名前が一致しているかを確認してください。</span><span lang="en">A pack is a folder named <code class="inline">X</code> holding <code class="inline">X.nulm</code> and images such as <code class="inline">X_0.png</code>. Check that the folder name matches the <code class="inline">.nulm</code> name.</span></td>
-        </tr>
-        <tr>
-          <td><span lang="ja">Windows の「PC が保護されました」</span><span lang="en">Windows “protected your PC” (SmartScreen)</span></td>
-          <td><span lang="ja">実行ファイルにコード署名がないために出ます。公式のリリースページから入手したものであることを確かめて、「詳細情報」→「実行」を選びます。</span><span lang="en">It appears because the executable is not code-signed. Make sure you got it from the official release page, then choose “More info” → “Run anyway”.</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section id="safety">
-  <h2 lang="ja">安全面</h2>
-  <h2 lang="en">Safety</h2>
-  <ul class="plain" lang="ja">
-    <li>ダウンロードするのは、<strong>ModLoader と NULM Background の公開リポジトリ</strong>のリリースだけです。</li>
-    <li>ダウンロードしたファイルは、GitHub が公開している <strong>SHA-256</strong> と照合します。一致しなければ破棄します。</li>
-    <li><code class="inline">TaikoNauts.exe</code> は書き換えません。ModLoader の導入では、元の <code class="inline">raylib.dll</code> を <code class="inline">raylib_original.dll</code> にバックアップします。</li>
-    <li>展開先のフォルダの外にファイルを書こうとするパッケージは拒否します。</li>
-    <li>管理者権限は要求しません。現在のユーザーで動きます。</li>
-  </ul>
-  <ul class="plain" lang="en">
-    <li>It downloads only releases of the <strong>public ModLoader and NULM Background repositories</strong>.</li>
-    <li>Each download is checked against the <strong>SHA-256</strong> GitHub publishes; a mismatch is discarded.</li>
-    <li><code class="inline">TaikoNauts.exe</code> is never modified. Installing the ModLoader backs up the original <code class="inline">raylib.dll</code> as <code class="inline">raylib_original.dll</code>.</li>
-    <li>A package that tries to write outside the target folder is rejected.</li>
-    <li>It does not ask for administrator rights and runs as the current user.</li>
-  </ul>
-  <h3 lang="ja">元に戻すには</h3>
-  <h3 lang="en">To undo it</h3>
-  <p lang="ja">ゲームのフォルダの <code class="inline">uninstall.bat</code> を実行すると、元の <code class="inline">raylib.dll</code> に戻ります。NULM Background だけ外すなら、<code class="inline">mods\nulm-background</code> フォルダを削除します。</p>
-  <p lang="en">Run <code class="inline">uninstall.bat</code> in the game folder to restore the original <code class="inline">raylib.dll</code>. To remove only NULM Background, delete the <code class="inline">mods\nulm-background</code> folder.</p>
-
-  <details>
-    <summary><span lang="ja">上級者向け: コマンドラインで実行する</span><span lang="en">Advanced: run it from the command line</span></summary>
-    <p lang="ja">ウィンドウを開かずに、そのまま導入できます。</p>
-    <p lang="en">Installs without opening a window.</p>
-    <pre class="code">TaikoNautsModloaderInstaller.exe --game "C:\Games\TaikoNauts\TaikoNauts.exe"</pre>
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th><span lang="ja">オプション</span><span lang="en">Option</span></th><th><span lang="ja">意味</span><span lang="en">Meaning</span></th></tr></thead>
-        <tbody>
-          <tr><td><code class="inline">--no-loader</code> / <code class="inline">--no-mod</code> / <code class="inline">--no-lumens</code></td><td><span lang="ja">その手順を省く</span><span lang="en">Skip a step</span></td></tr>
-          <tr><td><code class="inline">--lumens-zip &lt;file&gt;</code></td><td><span lang="ja">NULM パックの ZIP を、スキンの <code class="inline">Lumens</code> に導入する</span><span lang="en">Install a ZIP of NULM packs into the skin's <code class="inline">Lumens</code></span></td></tr>
-          <tr><td><code class="inline">--skin &lt;name&gt;</code></td><td><span lang="ja"><code class="inline">Lumens</code> を作るスキン(初期値は使用中のスキン)</span><span lang="en">Skin that gets <code class="inline">Lumens</code> (default: the one in use)</span></td></tr>
-          <tr><td><code class="inline">--force</code></td><td><span lang="ja">ModLoader が最新でも入れ直す</span><span lang="en">Reinstall the ModLoader even when up to date</span></td></tr>
-          <tr><td><code class="inline">--loader-zip</code> / <code class="inline">--mod-zip</code></td><td><span lang="ja">ダウンロードの代わりに、手元の ZIP を使う(オフライン用)</span><span lang="en">Use a local ZIP instead of downloading (offline)</span></td></tr>
-          <tr><td><code class="inline">--log &lt;file&gt;</code></td><td><span lang="ja">ログをファイルにも書く</span><span lang="en">Also write the log to a file</span></td></tr>
-          <tr><td><code class="inline">--lang ja|en</code></td><td><span lang="ja">メッセージの言語</span><span lang="en">Language of the messages</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="muted" lang="ja">終了コード: <code class="inline">0</code> 成功 / <code class="inline">1</code> 失敗 / <code class="inline">2</code> TaikoNauts.exe が見つからない</p>
-    <p class="muted" lang="en">Exit codes: <code class="inline">0</code> success / <code class="inline">1</code> failed / <code class="inline">2</code> TaikoNauts.exe not found</p>
-  </details>
 </section>
 
 </div>
