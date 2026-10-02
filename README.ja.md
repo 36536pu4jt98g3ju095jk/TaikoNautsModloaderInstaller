@@ -5,6 +5,12 @@
 [TaikoNauts ModLoader](https://github.com/aightallthing/taikonauts-mod-loader) と
 [NULM Background](https://github.com/36536pu4jt98g3ju095jk/taikonauts-nulm-background-mod) MOD を、自動で導入する Windows 用のインストーラーです。`TaikoNauts.exe` を選んで **インストール** を押すだけです。
 
+## ダウンロード
+
+**[TaikoNautsModloaderInstaller.exe](https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller/releases/latest/download/TaikoNautsModloaderInstaller.exe)**
+(約 68 MB。.NET のインストールは不要です)。すべてのリリースは
+[リリースページ](https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller/releases)にあります。
+
 ## 使い方
 
 1. TaikoNauts と Mod Manager を終了します。

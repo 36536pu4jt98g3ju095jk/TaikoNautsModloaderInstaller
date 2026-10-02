@@ -7,6 +7,12 @@ A Windows installer that sets up the
 [NULM Background](https://github.com/36536pu4jt98g3ju095jk/taikonauts-nulm-background-mod)
 mod for you. Select `TaikoNauts.exe`, press **Install**, and it does the rest.
 
+## Download
+
+**[TaikoNautsModloaderInstaller.exe](https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller/releases/latest/download/TaikoNautsModloaderInstaller.exe)**
+(about 68 MB; no .NET install needed). All releases are on the
+[releases page](https://github.com/36536pu4jt98g3ju095jk/TaikoNautsModloaderInstaller/releases).
+
 ## Use it
 
 1. Close TaikoNauts and the Mod Manager.
