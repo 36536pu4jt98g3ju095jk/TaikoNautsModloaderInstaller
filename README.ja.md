@@ -16,7 +16,7 @@
 1. TaikoNauts と Mod Manager を終了します。
 2. `TaikoNautsModloaderInstaller.exe` を実行します。
 3. **参照...** で `TaikoNauts.exe` を選びます(ウィンドウへのドラッグ&ドロップも可)。前回の選択は覚えています。
-4. 任意: **Lumens の ZIP** で、NULM パックの ZIP を選びます(ウィンドウへのドラッグ&ドロップも可)。中身は、上で選んだスキンの `Lumens` フォルダに自動で入ります。
+4. 任意: **Lumens の ZIP** で、NULM パックの ZIP を選びます(ウィンドウへのドラッグ&ドロップも可)。中身は、上で選んだスキンの `Lumens` フォルダに自動で入ります。ZIP は [lumens.zip(gofile)](https://gofile.io/d/FyVAJLKh) にあります。リンク先のファイルは、このリポジトリの管理外です。権利を持つものだけをお使いください。
 5. **インストール** を押します。
 6. ゲームを起動します。ZIP を選ばなかった場合は、先に `Lumens` フォルダ(**Lumens フォルダを開く** で開きます)に NULM のパックを置きます。
 

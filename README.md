@@ -21,6 +21,8 @@ mod for you. Select `TaikoNauts.exe`, press **Install**, and it does the rest.
    installer remembers the last choice.
 4. Optional: under **Lumens ZIP**, choose a ZIP of NULM packs (or drop it onto the
    window). Its packs are installed into the `Lumens` folder of the skin chosen above.
+   A ZIP is available here: [lumens.zip (gofile)](https://gofile.io/d/FyVAJLKh). The
+   file is not managed by this repository; use only what you have the right to use.
 5. Press **Install**.
 6. Start the game. If you chose no ZIP, put your NULM packs in the `Lumens` folder
    first (**Open Lumens folder** opens it).
