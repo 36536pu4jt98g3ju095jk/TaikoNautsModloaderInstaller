@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using TaikoNautsModloaderInstaller.Core;
 
 namespace TaikoNautsModloaderInstaller.UI;
@@ -142,6 +142,9 @@ internal sealed class MainForm : Form
             SetGame(last);
         }
     }
+
+    /// <summary>Shows other text in the path box, for documentation images.</summary>
+    internal void ShowPathForScreenshot(string text) => pathBox.Text = text;
 
     private void ApplyLanguage()
     {

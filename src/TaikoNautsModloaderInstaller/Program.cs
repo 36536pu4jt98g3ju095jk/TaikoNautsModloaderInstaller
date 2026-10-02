@@ -23,14 +23,15 @@ internal static class Program
         "  --log <file>          also write the log to a file\r\n" +
         "  --lang ja|en          language of the messages\r\n" +
         "  --selftest-ui         create the window once and exit\r\n" +
-        "  --shot <file.png>     with --selftest-ui: save the window as an image\r\n";
+        "  --shot <file.png>     with --selftest-ui: save the window as an image\r\n" +
+        "  --shot-path <text>    with --shot: text to show in the path box\r\n";
 
     [STAThread]
     private static int Main(string[] args)
     {
         var values = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
         var flags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        string[] withValue = { "--game", "--skin", "--loader-zip", "--mod-zip", "--log", "--lang", "--shot" };
+        string[] withValue = { "--game", "--skin", "--loader-zip", "--mod-zip", "--log", "--lang", "--shot", "--shot-path" };
         for (int i = 0; i < args.Length; i++)
         {
             if (withValue.Contains(args[i], StringComparer.OrdinalIgnoreCase) && i + 1 < args.Length)
@@ -70,6 +71,11 @@ internal static class Program
                 form.ShowInTaskbar = false;
                 form.Show();
                 System.Windows.Forms.Application.DoEvents();
+                if (values.TryGetValue("--shot-path", out string? shown) && !string.IsNullOrEmpty(shown))
+                {
+                    form.ShowPathForScreenshot(shown);
+                }
+
                 form.PerformLayout();
                 using var bitmap = new System.Drawing.Bitmap(form.Width, form.Height);
                 form.DrawToBitmap(bitmap, new System.Drawing.Rectangle(0, 0, form.Width, form.Height));
