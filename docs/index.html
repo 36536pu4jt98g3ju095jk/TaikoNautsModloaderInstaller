@@ -173,8 +173,8 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
   </div>
   <ul class="three">
     <li><b>STEP 1</b><span lang="ja">TaikoNauts.exe を選ぶ</span><span lang="en">Select TaikoNauts.exe</span></li>
-    <li><b>STEP 2</b><span lang="ja">「インストール」を押す</span><span lang="en">Press Install</span></li>
-    <li><b>STEP 3</b><span lang="ja">Lumens に NULM を置く</span><span lang="en">Put NULM packs in Lumens</span></li>
+    <li><b>STEP 2</b><span lang="ja">NULM の ZIP を選ぶ(あれば)</span><span lang="en">Choose a NULM ZIP (if any)</span></li>
+    <li><b>STEP 3</b><span lang="ja">「インストール」を押す</span><span lang="en">Press Install</span></li>
   </ul>
 </div>
 
@@ -199,8 +199,8 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
     <div class="card">
       <span class="tag">Lumens</span>
       <h3 lang="ja">NULM の置き場所</h3><h3 lang="en">Where NULM goes</h3>
-      <p lang="ja">使っているスキンの中に <code class="inline">Lumens</code> フォルダを作ります。<strong>中身は空</strong>です(NULM のデータは入れません)。</p>
-      <p lang="en">Creates a <code class="inline">Lumens</code> folder in the skin you use. It is <strong>empty</strong>; no NULM data is installed.</p>
+      <p lang="ja">使っているスキンの中に <code class="inline">Lumens</code> フォルダを作ります。NULM の ZIP を選べば、その中身も自動で入れます。ZIP を選ばなければ<strong>中身は空</strong>です。</p>
+      <p lang="en">Creates a <code class="inline">Lumens</code> folder in the skin you use. If you choose a NULM ZIP, its packs are installed too. Without a ZIP the folder is <strong>empty</strong>.</p>
     </div>
   </div>
 </section>
@@ -213,18 +213,20 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
   <div class="guide">
     <div>
       <div class="shot" lang="ja">
-        <img src="assets/installer-ja.png" alt="インストーラーの画面" width="616" height="679">
-        <span class="pin" style="left:90%;top:15.8%">1</span>
-        <span class="pin" style="left:2.6%;top:36%">2</span>
-        <span class="pin" style="left:53.5%;top:89.3%">3</span>
-        <span class="pin" style="left:71.4%;top:89.3%">4</span>
+        <img src="assets/installer-ja.png" alt="インストーラーの画面" width="616" height="779">
+        <span class="pin" style="left:90%;top:13.7%">1</span>
+        <span class="pin" style="left:2.6%;top:31.3%">2</span>
+        <span class="pin" style="left:2.6%;top:46.7%">3</span>
+        <span class="pin" style="left:52.5%;top:92.2%">4</span>
+        <span class="pin" style="left:71.4%;top:92.2%">5</span>
       </div>
       <div class="shot" lang="en">
-        <img src="assets/installer-en.png" alt="The installer window" width="616" height="679">
-        <span class="pin" style="left:90%;top:15.8%">1</span>
-        <span class="pin" style="left:2.6%;top:36%">2</span>
-        <span class="pin" style="left:53.5%;top:89.3%">3</span>
-        <span class="pin" style="left:71.4%;top:89.3%">4</span>
+        <img src="assets/installer-en.png" alt="The installer window" width="616" height="779">
+        <span class="pin" style="left:90%;top:13.7%">1</span>
+        <span class="pin" style="left:2.6%;top:31.3%">2</span>
+        <span class="pin" style="left:2.6%;top:46.7%">3</span>
+        <span class="pin" style="left:52.5%;top:92.2%">4</span>
+        <span class="pin" style="left:71.4%;top:92.2%">5</span>
       </div>
     </div>
     <ol class="steps">
@@ -241,16 +243,22 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
         <p class="muted" lang="en">“Status” shows what is already there. Usually leave everything ticked. The skin in use is preselected for the <code class="inline">Lumens</code> folder.</p>
       </li>
       <li>
+        <p lang="ja"><strong>NULM の ZIP があれば、選ぶ(任意)。</strong></p>
+        <p class="muted" lang="ja">「Lumens の ZIP」の「参照...」で、NULM パックの ZIP を選びます(ウィンドウへのドラッグ&amp;ドロップも可)。<strong>中身は、上で選んだスキンの <code class="inline">Lumens</code> に自動で入ります。</strong>ZIP がなければ、飛ばしてかまいません。</p>
+        <p lang="en"><strong>Choose a NULM ZIP if you have one (optional).</strong></p>
+        <p class="muted" lang="en">Use “Browse...” under “Lumens ZIP” to pick a ZIP of NULM packs (or drop it onto the window). <strong>Its packs go into the <code class="inline">Lumens</code> folder of the skin chosen above automatically.</strong> Skip this if you have no ZIP.</p>
+      </li>
+      <li>
         <p lang="ja"><strong>「インストール」を押す。</strong></p>
         <p class="muted" lang="ja">ダウンロードと導入が進み、ログに経過が出ます。数分かかることがあります(ModLoader は約 63 MB)。「完了しました」と出れば終わりです。</p>
         <p lang="en"><strong>Press “Install”.</strong></p>
         <p class="muted" lang="en">It downloads and installs, and the log shows progress. It can take a few minutes (the ModLoader is about 63 MB). You are done when it says it finished.</p>
       </li>
       <li>
-        <p lang="ja"><strong>Lumens に NULM を置く。</strong></p>
-        <p class="muted" lang="ja">「Lumens フォルダを開く」で、置き場所が開きます。NULM のパックを入れて、ゲームを起動します。くわしくは <a href="#lumens">下の説明</a> へ。</p>
-        <p lang="en"><strong>Put NULM packs in Lumens.</strong></p>
-        <p class="muted" lang="en">“Open Lumens folder” opens the place. Add your NULM packs and start the game. See <a href="#lumens">the next section</a>.</p>
+        <p lang="ja"><strong>ゲームを起動する(ZIP を使わなかった人は、先に NULM を置く)。</strong></p>
+        <p class="muted" lang="ja">ZIP を選んだ人は、そのままゲームを起動できます。選ばなかった人は、「Lumens フォルダを開く」で開く場所に、NULM のパックを自分で置きます。くわしくは <a href="#lumens">下の説明</a> へ。</p>
+        <p lang="en"><strong>Start the game (if you used no ZIP, put NULM packs in first).</strong></p>
+        <p class="muted" lang="en">If you chose a ZIP you can start the game right away. Otherwise put your NULM packs into the folder that “Open Lumens folder” opens. See <a href="#lumens">the next section</a>.</p>
       </li>
     </ol>
   </div>
@@ -261,8 +269,26 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
 <section id="lumens">
   <h2 lang="ja">Lumens に NULM を置く</h2>
   <h2 lang="en">Putting NULM in Lumens</h2>
-  <p lang="ja">インストーラーが作った <code class="inline">Lumens</code> フォルダに、NULM のパックを<strong>パックごとに 1 つのフォルダ</strong>で置きます。ゲームのスキンごとに別のセットを持てるので、スキンを切り替えると背景も変わります。</p>
-  <p lang="en">Put NULM packs in the <code class="inline">Lumens</code> folder the installer created, <strong>one folder per pack</strong>. Each skin can have its own set, so switching skins switches the backgrounds.</p>
+  <p lang="ja">NULM のパックは、スキンの <code class="inline">Lumens</code> フォルダに、<strong>パックごとに 1 つのフォルダ</strong>で置かれます。ゲームのスキンごとに別のセットを持てるので、スキンを切り替えると背景も変わります。</p>
+  <p lang="en">NULM packs live in the skin's <code class="inline">Lumens</code> folder, <strong>one folder per pack</strong>. Each skin can have its own set, so switching skins switches the backgrounds.</p>
+  <h3 lang="ja">ZIP で入れる(おすすめ)</h3>
+  <h3 lang="en">Install from a ZIP (recommended)</h3>
+  <p lang="ja">インストーラーの「Lumens の ZIP」で ZIP を選べば、自動で振り分けて入れます。ZIP の作りは、次のどれでもかまいません。</p>
+  <p lang="en">Choose the ZIP under “Lumens ZIP” and the installer sorts it out. Any of these layouts works.</p>
+  <ul class="plain" lang="ja">
+    <li>パックのフォルダが、ZIP の一番上に並んでいる</li>
+    <li><code class="inline">Lumens</code> など、別のフォルダに包まれている</li>
+    <li>フォルダがなく、<code class="inline">.nulm</code> と画像が直接入っている</li>
+  </ul>
+  <ul class="plain" lang="en">
+    <li>The pack folders are at the top of the ZIP</li>
+    <li>They are wrapped in another folder such as <code class="inline">Lumens</code></li>
+    <li>There are no folders, just the <code class="inline">.nulm</code> and its images</li>
+  </ul>
+  <p class="muted" lang="ja">同じ名前のパックがすでにあれば、上書きします。取り込むのは <code class="inline">.nulm</code> と <code class="inline">.png</code> だけで、ほかのファイル(実行ファイルなど)は入れません。</p>
+  <p class="muted" lang="en">A pack with the same name is replaced. Only <code class="inline">.nulm</code> and <code class="inline">.png</code> files are taken; nothing else (such as executables) is installed.</p>
+  <h3 lang="ja">自分でフォルダに置く</h3>
+  <h3 lang="en">Or put them in by hand</h3>
   <pre class="code">TaikoNauts\
   Skins\
     ksty\
@@ -327,6 +353,10 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
           <td><span lang="ja">ゲームが <code class="inline">Program Files</code> のような保護された場所にあります。インストーラーを右クリックして「管理者として実行」するか、ゲームを別の場所に移してください。</span><span lang="en">The game is in a protected place such as <code class="inline">Program Files</code>. Right-click the installer and choose “Run as administrator”, or move the game elsewhere.</span></td>
         </tr>
         <tr>
+          <td><span lang="ja">ZIP に NULM のパックがありません</span><span lang="en">The ZIP has no NULM pack</span></td>
+          <td><span lang="ja">パックは、<code class="inline">X.nulm</code> と <code class="inline">X_0.png</code> などの画像が入った、<code class="inline">X</code> という名前のフォルダです。フォルダ名と <code class="inline">.nulm</code> の名前が一致しているかを確認してください。</span><span lang="en">A pack is a folder named <code class="inline">X</code> holding <code class="inline">X.nulm</code> and images such as <code class="inline">X_0.png</code>. Check that the folder name matches the <code class="inline">.nulm</code> name.</span></td>
+        </tr>
+        <tr>
           <td><span lang="ja">Windows の「PC が保護されました」</span><span lang="en">Windows “protected your PC” (SmartScreen)</span></td>
           <td><span lang="ja">実行ファイルにコード署名がないために出ます。公式のリリースページから入手したものであることを確かめて、「詳細情報」→「実行」を選びます。</span><span lang="en">It appears because the executable is not code-signed. Make sure you got it from the official release page, then choose “More info” → “Run anyway”.</span></td>
         </tr>
@@ -367,6 +397,7 @@ html[data-lang="ja"] [lang="en"], html[data-lang="en"] [lang="ja"] { display: no
         <thead><tr><th><span lang="ja">オプション</span><span lang="en">Option</span></th><th><span lang="ja">意味</span><span lang="en">Meaning</span></th></tr></thead>
         <tbody>
           <tr><td><code class="inline">--no-loader</code> / <code class="inline">--no-mod</code> / <code class="inline">--no-lumens</code></td><td><span lang="ja">その手順を省く</span><span lang="en">Skip a step</span></td></tr>
+          <tr><td><code class="inline">--lumens-zip &lt;file&gt;</code></td><td><span lang="ja">NULM パックの ZIP を、スキンの <code class="inline">Lumens</code> に導入する</span><span lang="en">Install a ZIP of NULM packs into the skin's <code class="inline">Lumens</code></span></td></tr>
           <tr><td><code class="inline">--skin &lt;name&gt;</code></td><td><span lang="ja"><code class="inline">Lumens</code> を作るスキン(初期値は使用中のスキン)</span><span lang="en">Skin that gets <code class="inline">Lumens</code> (default: the one in use)</span></td></tr>
           <tr><td><code class="inline">--force</code></td><td><span lang="ja">ModLoader が最新でも入れ直す</span><span lang="en">Reinstall the ModLoader even when up to date</span></td></tr>
           <tr><td><code class="inline">--loader-zip</code> / <code class="inline">--mod-zip</code></td><td><span lang="ja">ダウンロードの代わりに、手元の ZIP を使う(オフライン用)</span><span lang="en">Use a local ZIP instead of downloading (offline)</span></td></tr>

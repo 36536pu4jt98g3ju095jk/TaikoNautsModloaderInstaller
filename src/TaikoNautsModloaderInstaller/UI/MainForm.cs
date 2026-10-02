@@ -20,6 +20,11 @@ internal sealed class MainForm : Form
     private readonly CheckBox modCheck = new() { AutoSize = true, Checked = true };
     private readonly CheckBox lumensCheck = new() { AutoSize = true, Checked = true };
     private readonly ComboBox skinBox = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 200 };
+    private readonly GroupBox zipGroup = new() { Dock = DockStyle.Top, AutoSize = true };
+    private readonly TextBox zipBox = new() { Dock = DockStyle.Fill };
+    private readonly Button zipButton = new() { AutoSize = true };
+    private readonly Button zipClearButton = new() { AutoSize = true };
+    private readonly Label zipHint = new() { AutoSize = true, MaximumSize = new Size(540, 0), ForeColor = SystemColors.GrayText };
     private readonly ProgressBar progressBar = new() { Dock = DockStyle.Fill, Minimum = 0, Maximum = 1000 };
     private readonly TextBox logBox = new()
     {
@@ -40,7 +45,7 @@ internal sealed class MainForm : Form
         FormBorderStyle = FormBorderStyle.FixedDialog;
         MaximizeBox = false;
         StartPosition = FormStartPosition.CenterScreen;
-        ClientSize = new Size(600, 640);
+        ClientSize = new Size(600, 740);
         AllowDrop = true;
         Icon = SystemIcons.Application;
 
@@ -73,6 +78,20 @@ internal sealed class MainForm : Form
         optionsGroup.Controls.Add(optionsPanel);
         optionsGroup.Padding = new Padding(10, 6, 10, 8);
 
+        var zipRow = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 3 };
+        zipRow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        zipRow.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        zipRow.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        zipRow.Controls.Add(zipBox, 0, 0);
+        zipRow.Controls.Add(zipButton, 1, 0);
+        zipRow.Controls.Add(zipClearButton, 2, 0);
+        var zipPanel = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, AutoSize = true, WrapContents = false };
+        zipPanel.Controls.Add(zipRow);
+        zipPanel.Controls.Add(zipHint);
+        zipRow.Width = 520;
+        zipGroup.Controls.Add(zipPanel);
+        zipGroup.Padding = new Padding(10, 6, 10, 8);
+
         var buttons = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.RightToLeft, AutoSize = true };
         buttons.Controls.Add(closeButton);
         buttons.Controls.Add(openLumensButton);
@@ -80,9 +99,10 @@ internal sealed class MainForm : Form
 
         var layout = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 8, Padding = new Padding(16, 12, 16, 12),
+            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 9, Padding = new Padding(16, 12, 16, 12),
         };
         layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
@@ -96,9 +116,10 @@ internal sealed class MainForm : Form
         layout.Controls.Add(pathRow, 0, 2);
         layout.Controls.Add(statusGroup, 0, 3);
         layout.Controls.Add(optionsGroup, 0, 4);
-        layout.Controls.Add(progressBar, 0, 5);
-        layout.Controls.Add(logBox, 0, 6);
-        layout.Controls.Add(buttons, 0, 7);
+        layout.Controls.Add(zipGroup, 0, 5);
+        layout.Controls.Add(progressBar, 0, 6);
+        layout.Controls.Add(logBox, 0, 7);
+        layout.Controls.Add(buttons, 0, 8);
         Controls.Add(layout);
 
         languageLink.LinkClicked += (_, _) => { Lang.Japanese = !Lang.Japanese; ApplyLanguage(); };
@@ -112,6 +133,9 @@ internal sealed class MainForm : Form
                 SetGame(pathBox.Text);
             }
         };
+        zipButton.Click += (_, _) => BrowseZip();
+        zipClearButton.Click += (_, _) => SetZip(null);
+        zipBox.Leave += (_, _) => SetZip(zipBox.Text);
         lumensCheck.CheckedChanged += (_, _) => skinBox.Enabled = lumensCheck.Checked && !busy;
         installButton.Click += async (_, _) => await InstallAsync();
         openLumensButton.Click += (_, _) => OpenLumens();
@@ -127,7 +151,15 @@ internal sealed class MainForm : Form
         {
             if (e.Data?.GetData(DataFormats.FileDrop) is string[] { Length: > 0 } files)
             {
-                SetGame(files[0]);
+                // a ZIP is a Lumens package; anything else is taken as TaikoNauts.exe
+                if (files[0].EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+                {
+                    SetZip(files[0]);
+                }
+                else
+                {
+                    SetGame(files[0]);
+                }
             }
         };
 
@@ -161,6 +193,12 @@ internal sealed class MainForm : Form
         loaderCheck.Text = Lang.T("TaikoNauts ModLoader (latest)", "TaikoNauts ModLoader(最新版)");
         modCheck.Text = Lang.T("NULM Background mod (latest)", "NULM Background MOD(最新版)");
         lumensCheck.Text = Lang.T("Create a Lumens folder in skin:", "Lumens フォルダを作るスキン:");
+        zipGroup.Text = Lang.T("Lumens ZIP (optional)", "Lumens の ZIP(任意)");
+        zipButton.Text = Lang.T("Browse...", "参照...");
+        zipClearButton.Text = Lang.T("Clear", "クリア");
+        zipHint.Text = Lang.T(
+            "Choose a ZIP of NULM packs and it is installed into the Lumens folder of the skin above.",
+            "NULM パックの ZIP を選ぶと、上で選んだスキンの Lumens フォルダに自動で入れます。");
         installButton.Text = Lang.T("Install", "インストール");
         openLumensButton.Text = Lang.T("Open Lumens folder", "Lumens フォルダを開く");
         closeButton.Text = Lang.T("Close", "閉じる");
@@ -183,6 +221,47 @@ internal sealed class MainForm : Form
         if (dialog.ShowDialog(this) == DialogResult.OK)
         {
             SetGame(dialog.FileName);
+        }
+    }
+
+    private void BrowseZip()
+    {
+        using var dialog = new OpenFileDialog
+        {
+            Title = Lang.T("Select a ZIP of NULM packs", "NULM パックの ZIP を選択"),
+            Filter = "ZIP|*.zip",
+            CheckFileExists = true,
+        };
+        if (dialog.ShowDialog(this) == DialogResult.OK)
+        {
+            SetZip(dialog.FileName);
+        }
+    }
+
+    private void SetZip(string? path)
+    {
+        string trimmed = (path ?? string.Empty).Trim().Trim('"');
+        if (trimmed.Length == 0)
+        {
+            zipBox.Text = string.Empty;
+            lumensCheck.Enabled = !busy;
+            return;
+        }
+
+        try
+        {
+            IReadOnlyList<string> packs = LumensPackage.Inspect(trimmed);
+            zipBox.Text = trimmed;
+            lumensCheck.Checked = true;
+            lumensCheck.Enabled = false;
+            AppendLog(Lang.T($"Lumens ZIP: {packs.Count} pack(s): ", $"Lumens の ZIP: パック {packs.Count} 個: ") + string.Join(", ", packs));
+        }
+        catch (Exception exception) when (exception is InstallException or IOException)
+        {
+            zipBox.Text = string.Empty;
+            lumensCheck.Enabled = !busy;
+            AppendLog(exception.Message);
+            MessageBox.Show(this, exception.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 
@@ -256,11 +335,12 @@ internal sealed class MainForm : Form
     private void SetBusy(bool value)
     {
         busy = value;
-        foreach (Control control in new Control[] { browseButton, pathBox, loaderCheck, modCheck, lumensCheck, closeButton })
+        foreach (Control control in new Control[] { browseButton, pathBox, loaderCheck, modCheck, zipBox, zipButton, zipClearButton, closeButton })
         {
             control.Enabled = !value;
         }
 
+        lumensCheck.Enabled = !value && zipBox.Text.Length == 0;
         skinBox.Enabled = !value && lumensCheck.Checked;
         installButton.Enabled = !value && game != null;
     }
@@ -299,6 +379,7 @@ internal sealed class MainForm : Form
             InstallMod = modCheck.Checked,
             CreateLumens = lumensCheck.Checked && skinBox.SelectedItem != null,
             Skin = skinBox.SelectedItem as string,
+            LumensZipPath = zipBox.Text.Length > 0 ? zipBox.Text : null,
         };
 
         InstallResult result = await Task.Run(() => pipeline.RunAsync(options, CancellationToken.None));

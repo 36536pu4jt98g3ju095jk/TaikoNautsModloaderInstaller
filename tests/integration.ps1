@@ -61,6 +61,71 @@ try {
     $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--skin', 'K-Style') 'skin.log'
     Assert ($run.Code -eq 0 -and (Test-Path "$game\Skins\K-Style\Lumens")) 'Lumens is created in the chosen skin'
 
+    Write-Host 'a Lumens ZIP'
+    function New-Zip($path, $files) {
+        Add-Type -AssemblyName System.IO.Compression
+        if (Test-Path $path) { [IO.File]::Delete($path) }
+        $stream = [IO.File]::Create($path)
+        $archive = New-Object IO.Compression.ZipArchive($stream, 'Create')
+        foreach ($name in $files.Keys) {
+            $entry = $archive.CreateEntry($name)
+            $writer = New-Object IO.StreamWriter($entry.Open())
+            $writer.Write($files[$name]); $writer.Dispose()
+        }
+        $archive.Dispose(); $stream.Dispose()
+    }
+    $lumens = "$game\Skins\ksty\Lumens"
+
+    New-Zip "$work\l1.zip" ([ordered]@{
+        'bg_nomal_a_01/bg_nomal_a_01.nulm' = 'new'
+        'bg_nomal_a_01/bg_nomal_a_01_0.png' = 'png'
+        'bg_nomal_a_01/readme.txt' = 'text'
+        'bg_nomal_a_01/evil.exe' = 'exe'
+        'donbg_a_01_1p/donbg_a_01_1p.nulm' = 'nulm'
+        'donbg_a_01_1p/donbg_a_01_1p_0.png' = 'png'
+    })
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--lumens-zip', "`"$work\l1.zip`"") 'l1.log'
+    Assert ($run.Code -eq 0) 'packs at the top of the ZIP: exit code 0'
+    Assert ((Test-Path "$lumens\bg_nomal_a_01\bg_nomal_a_01_0.png") -and (Test-Path "$lumens\donbg_a_01_1p\donbg_a_01_1p.nulm")) 'both packs are installed'
+    Assert ((Get-Content "$lumens\bg_nomal_a_01\bg_nomal_a_01.nulm" -Raw) -eq 'new') 'an existing pack is replaced'
+    Assert (-not (Test-Path "$lumens\bg_nomal_a_01\evil.exe") -and -not (Test-Path "$lumens\bg_nomal_a_01\readme.txt")) 'only .nulm and .png files are taken'
+
+    New-Zip "$work\l2.zip" ([ordered]@{
+        'Lumens/bg_fever_a_01/bg_fever_a_01.nulm' = 'x'
+        'Lumens/bg_fever_a_01/bg_fever_a_01_0.png' = 'x'
+        'MyPacks/Set1/bg_dai_a_01/bg_dai_a_01.nulm' = 'x'
+        'MyPacks/Set1/bg_dai_a_01/bg_dai_a_01_0.png' = 'x'
+    })
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--lumens-zip', "`"$work\l2.zip`"") 'l2.log'
+    Assert ($run.Code -eq 0 -and (Test-Path "$lumens\bg_fever_a_01\bg_fever_a_01.nulm") -and (Test-Path "$lumens\bg_dai_a_01\bg_dai_a_01_0.png")) 'packs inside wrapper folders are found'
+
+    New-Zip "$work\l3.zip" ([ordered]@{
+        'bg_nomal_a_02.nulm' = 'x'
+        'bg_nomal_a_02_0.png' = 'x'
+        'unrelated.png' = 'x'
+    })
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--lumens-zip', "`"$work\l3.zip`"") 'l3.log'
+    Assert ($run.Code -eq 0 -and (Test-Path "$lumens\bg_nomal_a_02\bg_nomal_a_02_0.png") -and -not (Test-Path "$lumens\bg_nomal_a_02\unrelated.png")) 'a flat ZIP is put into a folder'
+
+    New-Zip "$work\l4.zip" ([ordered]@{ 'mypack/mypack.nulm' = 'x'; 'mypack/mypack_0.png' = 'x' })
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--lumens-zip', "`"$work\l4.zip`"") 'l4.log'
+    Assert ($run.Code -eq 0 -and $run.Log -match 'does not start with') 'a pack with an unknown name is installed with a note'
+
+    New-Zip "$work\l5.zip" ([ordered]@{ 'readme.txt' = 'nothing here' })
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--lumens-zip', "`"$work\l5.zip`"") 'l5.log'
+    Assert ($run.Code -eq 1 -and $run.Log -match 'no NULM pack') 'a ZIP without packs is refused'
+
+    New-Zip "$work\l6.zip" ([ordered]@{ 'bg_x/../../escape.nulm' = 'x'; '../escape.png' = 'x' })
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--lumens-zip', "`"$work\l6.zip`"") 'l6.log'
+    Assert ($run.Code -eq 1) 'a ZIP that tries to escape holds no usable pack'
+    Assert (-not (Test-Path "$game\Skins\ksty\escape.nulm") -and -not (Test-Path "$game\Skins\escape.png") -and -not (Test-Path "$lumens\escape.nulm")) 'nothing is written outside Lumens'
+
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--lumens-zip', "`"$work\missing.zip`"") 'l7.log'
+    Assert ($run.Code -eq 1 -and $run.Log -match 'was not found') 'a missing ZIP is reported'
+
+    $run = Invoke-Installer @('--game', "`"$game`"", '--no-loader', '--no-mod', '--skin', 'K-Style', '--lumens-zip', "`"$work\l1.zip`"") 'l8.log'
+    Assert ($run.Code -eq 0 -and (Test-Path "$game\Skins\K-Style\Lumens\bg_nomal_a_01\bg_nomal_a_01.nulm")) 'the ZIP goes into the chosen skin'
+
     Write-Host 'the mod needs the ModLoader'
     $bare = New-FakeGame 'bare' $null
     $run = Invoke-Installer @('--game', "`"$bare`"", '--no-loader', '--mod-zip', "`"$ModZip`"") 'bare.log'

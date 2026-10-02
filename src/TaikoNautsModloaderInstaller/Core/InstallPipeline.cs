@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 
 namespace TaikoNautsModloaderInstaller.Core;
@@ -19,6 +19,9 @@ internal sealed class InstallOptions
     /// <summary>Use local packages instead of downloading (offline installs and tests).</summary>
     public string? LoaderZipPath { get; init; }
     public string? ModZipPath { get; init; }
+
+    /// <summary>A ZIP of NULM packs to put into the skin's Lumens folder. Implies the Lumens step.</summary>
+    public string? LumensZipPath { get; init; }
 }
 
 internal sealed record InstallResult(bool Success, string? LumensPath, string? Error);
@@ -50,7 +53,7 @@ internal sealed class InstallPipeline
                 await InstallModAsync(options, work, cancellation).ConfigureAwait(false);
             }
 
-            string? lumens = options.CreateLumens ? CreateLumens(options) : null;
+            string? lumens = options.CreateLumens || options.LumensZipPath != null ? CreateLumens(options) : null;
             Progress?.Invoke(1);
             Say("Done.", "完了しました。");
             return new InstallResult(true, lumens, null);
@@ -103,9 +106,22 @@ internal sealed class InstallPipeline
                 "Mod Manager が起動しています。終了してから、もう一度試してください。");
         }
 
-        if (!options.InstallLoader && !options.InstallMod && !options.CreateLumens)
+        if (!options.InstallLoader && !options.InstallMod && !options.CreateLumens && options.LumensZipPath == null)
         {
             throw new InstallException("Nothing is selected.", "何も選択されていません。");
+        }
+
+        if (options.LumensZipPath != null)
+        {
+            // fail before anything is downloaded when the ZIP is missing or holds no pack
+            if (!File.Exists(options.LumensZipPath))
+            {
+                throw new InstallException(
+                    $"The Lumens ZIP was not found: {options.LumensZipPath}",
+                    $"Lumens の ZIP が見つかりません: {options.LumensZipPath}");
+            }
+
+            LumensPackage.Inspect(options.LumensZipPath);
         }
     }
 
@@ -269,12 +285,26 @@ internal sealed class InstallPipeline
         string? skin = options.Skin ?? game.SelectedSkin;
         if (skin == null)
         {
+            if (options.LumensZipPath != null)
+            {
+                throw new InstallException(
+                    "The skin in use could not be read. Choose a skin for the Lumens ZIP.",
+                    "使用中のスキンを読み取れません。Lumens の ZIP を入れるスキンを選んでください。");
+            }
+
             Say("The skin in use could not be read, so no Lumens folder was created.",
                 "使用中のスキンを読み取れなかったため、Lumens フォルダは作成しませんでした。");
             return null;
         }
 
         string skinDirectory = Path.Combine(game.SkinsDirectory, skin);
+        if (!Directory.Exists(skinDirectory) && options.LumensZipPath != null)
+        {
+            throw new InstallException(
+                $"The skin folder {skinDirectory} does not exist.",
+                $"スキンのフォルダ {skinDirectory} がありません。");
+        }
+
         if (!Directory.Exists(skinDirectory))
         {
             Say($"The skin folder {skinDirectory} does not exist, so no Lumens folder was created.",
@@ -298,6 +328,19 @@ internal sealed class InstallPipeline
         }
 
         Say($"Created {lumens}", $"{lumens} を作成しました。");
+
+        if (options.LumensZipPath != null)
+        {
+            IReadOnlyList<LumensPack> packs = LumensPackage.Install(options.LumensZipPath, lumens);
+            Say($"Installed {packs.Count} NULM pack(s) into Lumens: {string.Join(", ", packs.Select(pack => pack.Name))}",
+                $"NULM パックを {packs.Count} 個、Lumens に導入しました: {string.Join(", ", packs.Select(pack => pack.Name))}");
+            foreach (LumensPack unknown in packs.Where(pack => !pack.IsKnownKind))
+            {
+                Say($"Note: {unknown.Name} does not start with donbg_, bg_nomal_, bg_fever_ or bg_dai_, so the mod will not use it.",
+                    $"注意: {unknown.Name} は donbg_ / bg_nomal_ / bg_fever_ / bg_dai_ で始まらないため、MOD では使われません。");
+            }
+        }
+
         return lumens;
     }
 

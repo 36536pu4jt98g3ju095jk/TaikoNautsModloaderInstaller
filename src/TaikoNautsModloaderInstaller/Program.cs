@@ -20,6 +20,7 @@ internal static class Program
         "  --force               reinstall the ModLoader even when it is up to date\r\n" +
         "  --loader-zip <file>   use a local ModLoader package instead of downloading\r\n" +
         "  --mod-zip <file>      use a local mod package instead of downloading\r\n" +
+        "  --lumens-zip <file>   a ZIP of NULM packs to install into the skin's Lumens folder\r\n" +
         "  --log <file>          also write the log to a file\r\n" +
         "  --lang ja|en          language of the messages\r\n" +
         "  --selftest-ui         create the window once and exit\r\n" +
@@ -31,7 +32,7 @@ internal static class Program
     {
         var values = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
         var flags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        string[] withValue = { "--game", "--skin", "--loader-zip", "--mod-zip", "--log", "--lang", "--shot", "--shot-path" };
+        string[] withValue = { "--game", "--skin", "--loader-zip", "--mod-zip", "--lumens-zip", "--log", "--lang", "--shot", "--shot-path" };
         for (int i = 0; i < args.Length; i++)
         {
             if (withValue.Contains(args[i], StringComparer.OrdinalIgnoreCase) && i + 1 < args.Length)
@@ -132,6 +133,7 @@ internal static class Program
                 Force = flags.Contains("--force"),
                 LoaderZipPath = values.GetValueOrDefault("--loader-zip"),
                 ModZipPath = values.GetValueOrDefault("--mod-zip"),
+                LumensZipPath = values.GetValueOrDefault("--lumens-zip"),
             };
 
             var pipeline = new InstallPipeline();
